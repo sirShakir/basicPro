@@ -1,35 +1,13 @@
 import numpy as np
 import cv2
 import os.path
-import requests
 
-def send_simple_message():
-    return requests.post(
-        "xxx",
-        auth=("api", "xxx"),
-        data={"from": "Mailgun Sandbox <xxx>",
-              "to": "Basic Pro Dev <xxx.com>",
-              "subject": "Basic Pro Notification",
-              "text": "Congratulations Basic Pro Cam, you have detected motion AGAIN"})
-
-videoString = 'videoCapture#'
-videoInt = 0
-videoName = videoString + str(videoInt)
-
-while os.path.isfile(videoName + '.avi'):
-    videoInt = videoInt + 1
-    videoName = videoString + str(videoInt)
-
-videoName = videoName + '.avi'
-
-
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('videoCapture#0.avi')
 firstFrame = None
 isRecording = False
-sendMessage = 0
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 #out = cv2.VideoWriter(videoName + 'avi',fourcc, 20.0, (640,480))
-out = cv2.VideoWriter(videoName,fourcc, 20.0, (640,480))
+out = cv2.VideoWriter('newnewVideo.avi',fourcc, 20.0, (640,480))
 
 
 while(True):
@@ -58,9 +36,6 @@ while(True):
             
     if isRecording == True:
         #print("Ca Ca Ka Crazy!!!")
-        if sendMessage == 0:
-            sendMessage = 1
-            send_simple_message()
         out.write(frame)
 
     # Display the resulting frame
